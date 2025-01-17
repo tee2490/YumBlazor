@@ -11,6 +11,19 @@ namespace YumBlazor.Data
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer("Server=Teeradet;Database=YumBlazor;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         }
+
+        public DbSet<Category> Category { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Appetizer" },
+                new Category { Id = 2, Name = "Entree" },
+                new Category { Id = 3, Name = "Dessert" }
+            );
+        }
     }
 
     
