@@ -1,3 +1,4 @@
+global using YumBlazor.Data;
 global using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
