@@ -41,7 +41,7 @@ namespace YumBlazor.Repository
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _db.Product.ToListAsync();
+            return await _db.Product.Include(p=>p.Category).ToListAsync();
         }
 
         public async Task<Product> UpdateAsync(Product obj)
