@@ -3,6 +3,7 @@
 @inject ICategoryRepository _categoryRepository
 @inject IProductRepository _productRepository
 @inject NavigationManager _navigationManager
+@inject IWebHostEnvironment _webHostEnvironment
 
 @inject IJSRuntime _JS
 
@@ -93,6 +94,12 @@ else
     private string? _directoryPath { get; set; }
     private bool _isImageLoading { get; set; } = false;
 
+    protected override Task OnInitializedAsync()
+    {
+        _directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "product");
+        return base.OnInitializedAsync();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -134,6 +141,21 @@ else
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
+        IsProcessing = true;
 
+        var file = e.File;
+        FileInfo fileInfo = new(file.Name);
+        var newFileName = $"{Guid.NewGuid()}.{fileInfo.Extension}";
+
+        if (!Directory.Exists(_directoryPath))
+        {
+            Directory.CreateDirectory(_directoryPath);
+        }
+        var path = Path.Combine(_directoryPath, newFileName);
+
+        await using FileStream fileStream = new(path, FileMode.Create);
+        await file.OpenReadStream(file.Size).CopyToAsync(fileStream);
+
+        IsProcessing = false;
     }
 }
