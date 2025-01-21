@@ -1,6 +1,7 @@
 ﻿@page "/order/details/{Id:int}"
 @inject IOrderRepository _orderRepository
 @inject IJSRuntime _JS
+@inject AuthenticationStateProvider _AuthenticationStateProvider
 
 @if (IsProcessing)
 {
@@ -59,7 +60,9 @@ else
                         <a href="order/list" class="btn btn-secondary  m-2 p-2" style="width:150px;">Back to Orders</a>
                     </div>
                     <div class="col-7 text-end">
-                        @if (OrderHeader.Status != SD.StatusCancelled && OrderHeader.Status != SD.StatusCompleted)
+                        @if (OrderHeader.Status != SD.StatusCancelled && OrderHeader.Status != SD.StatusCompleted
+                       && _AuthenticationStateProvider.GetAuthenticationStateAsync().GetAwaiter().GetResult().User?.IsInRole(SD.Role_Admin) == true
+                       )
                         {
                             <button class="btn btn-danger m-2 p-2" @onclick="()=>UpdateStatus(SD.StatusCancelled)" style="width:150px;">Cancelled</button>
 
