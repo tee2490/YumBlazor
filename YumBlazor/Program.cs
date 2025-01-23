@@ -2,14 +2,13 @@ global using YumBlazor.Data;
 global using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using YumBlazor.Components;
 using YumBlazor.Components.Account;
-using YumBlazor.Data;
 using YumBlazor.Repository.IRepository;
 using YumBlazor.Repository;
 using Radzen;
 using YumBlazor.Services;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +23,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddSingleton<SharedStateService>();
+builder.Services.AddScoped<PaymentService>();
 
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
@@ -56,6 +56,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("StripeApiKey").Value;
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
