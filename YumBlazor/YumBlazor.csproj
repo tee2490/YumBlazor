@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\IRepository\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>

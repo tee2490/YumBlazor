@@ -1,10 +1,13 @@
+global using Microsoft.EntityFrameworkCore;
+global using YumBlazor.Repository;
+global using YumBlazor.Repository.IRepository;
+global using YumBlazor.Data;
 global using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using YumBlazor.Components;
 using YumBlazor.Components.Account;
-using YumBlazor.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
