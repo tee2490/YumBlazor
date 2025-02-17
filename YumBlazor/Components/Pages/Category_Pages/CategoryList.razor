@@ -53,15 +53,17 @@ else
 }
 
 @code {
-    private bool IsProcessing { get; set; } = false;
+    private bool IsProcessing { get; set; } = true;
     private IEnumerable<Category> Categories { get; set; } = new List<Category>();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        IsProcessing = true;
-        await Task.Delay(2000);
-        await LoadCategories();
-        IsProcessing = false;
+        if (firstRender)
+        {
+            await LoadCategories();
+            IsProcessing = false;
+            StateHasChanged();
+        }
     }
 
     private async Task LoadCategories()
