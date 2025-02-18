@@ -1,6 +1,9 @@
 ﻿@page "/category"
 
 @inject ICategoryRepository _categoryRepository
+@inject IJSRuntime _JS
+
+<YumBlazor.Components.Shared.BsModal></YumBlazor.Components.Shared.BsModal>
 
 @if (IsProcessing)
 {
@@ -46,7 +49,7 @@ else
                                     <a href="@($"category/update/{obj.Id}")" class="btn btn-primary">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </a>
-                                    <button class="btn btn-danger">
+                                    <button class="btn btn-danger" @onclick="()=>HandleDelete(obj.Id)">
                                         <i class="bi bi-trash3"></i> Delete
                                     </button>
                                 </td>
@@ -60,6 +63,7 @@ else
 }
 
 @code {
+    private int DeleteCategoryID { get; set; } = 0;
     private bool IsProcessing { get; set; } = true;
     private IEnumerable<Category> Categories { get; set; } = new List<Category>();
 
@@ -76,5 +80,11 @@ else
     private async Task LoadCategories()
     {
         Categories = await _categoryRepository.GetAllAsync();
+    }
+
+    private void HandleDelete(int id)
+    {
+        DeleteCategoryID = id;
+        _JS.InvokeVoidAsync("ShowConfirmationModal");
     }
 }
