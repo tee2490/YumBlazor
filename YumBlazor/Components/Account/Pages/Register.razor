@@ -43,6 +43,14 @@
                         <label for="confirm-password">Confirm Password</label>
                         <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
                     </div>
+                    <div class="form-floating mb-3">
+                        <InputSelect @bind-Value="Input.Role" class="form-select">
+                            <option value="@SD.Role_Customer" selected>@SD.Role_Customer</option>
+                            <option value="@SD.Role_Admin">@SD.Role_Admin</option>
+                        </InputSelect>
+                        <label for="role">Select Role</label>
+                        <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                    </div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
                 </EditForm>
 
@@ -134,6 +142,8 @@
 
     private sealed class InputModel
     {
+        public string? Role { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
