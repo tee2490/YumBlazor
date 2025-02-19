@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <AuthorizeView>
+ @*    <AuthorizeView>
         Any authorized User
     </AuthorizeView>
     <AuthorizeView Roles="@SD.Role_Admin">
@@ -9,13 +9,14 @@
     </AuthorizeView>
     <AuthorizeView Roles="@SD.Role_Customer">
         CUSTOMER
-    </AuthorizeView>
+    </AuthorizeView> *@
 
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
+        <NavBar></NavBar>
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
