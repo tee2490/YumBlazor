@@ -185,7 +185,9 @@ else
         var fileToDelete = Product.ImageUrl.Split('/').Reverse().First();
         var filePathToDeleteImage = Path.Combine(_directoryPath, fileToDelete);
 
-        if (!File.Exists(filePathToDeleteImage)) return;
+        if (!File.Exists(filePathToDeleteImage))
+            Product.ImageUrl = null;
+        return;
 
         File.Delete(filePathToDeleteImage);
         Product.ImageUrl = null;
