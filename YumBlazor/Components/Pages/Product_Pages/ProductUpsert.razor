@@ -64,7 +64,7 @@ else
                         @if (Product.ImageUrl == null)
                         {
                             <InputFile OnChange="LoadFiles" class="form-control" id="customFile"
-                                       accept="image/x-png,image/jpeg"></InputFile>
+                            accept="image/x-png,image/jpeg"></InputFile>
                             <label for="customFile">Upload Image</label>
                         }
                     </div>
@@ -186,8 +186,10 @@ else
         var filePathToDeleteImage = Path.Combine(_directoryPath, fileToDelete);
 
         if (!File.Exists(filePathToDeleteImage))
+        {
             Product.ImageUrl = null;
-        return;
+            return;
+        }
 
         File.Delete(filePathToDeleteImage);
         Product.ImageUrl = null;
