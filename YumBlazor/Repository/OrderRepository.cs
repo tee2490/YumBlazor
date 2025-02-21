@@ -46,9 +46,9 @@
             return orderHeader;
         }
 
-        public async Task<OrderHeader> GetOrderBySessionIdAsync(int sessionId)
+        public async Task<OrderHeader> GetOrderBySessionIdAsync(string sessionId)
         {
-            return await _db.OrderHeader.FirstOrDefaultAsync(u => u.SessionId == sessionId.ToString());
+            return await _db.OrderHeader.FirstOrDefaultAsync(u => u.SessionId == sessionId);
         }
     }
 }
