@@ -1,4 +1,5 @@
 ﻿@page "/cart"
+@inject SharedStateService _sharedStateService
 @inject IOrderRepository _orderRepository
 @inject NavigationManager _navigationManager
 @inject AuthenticationStateProvider _AuthenticationStateProvider
@@ -168,6 +169,7 @@ else
         //add item to cart
         var result = await
      _cartRepository.UpdateCartAsync(OrderHeader.UserId, productId, updateBy); await LoadCart();
+        _sharedStateService.TotalCartCount = await _cartRepository.GetTotalCartCartCountAsync(OrderHeader.UserId);
     }
 
     private async Task ProcessOrderCreation()
