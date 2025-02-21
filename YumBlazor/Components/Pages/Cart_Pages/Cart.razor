@@ -1,4 +1,5 @@
 ﻿@page "/cart"
+@inject PaymentService _paymentService
 @inject SharedStateService _sharedStateService
 @inject IOrderRepository _orderRepository
 @inject NavigationManager _navigationManager
@@ -178,8 +179,11 @@ else
         await Task.Yield();
         OrderHeader.OrderDetails = SD.ConvertShoppingCartListToOrderDetail(ShoppingCarts.ToList());
 
+        var session = _paymentService.CreateStripeCheckoutSession(OrderHeader);
+        OrderHeader.SessionId = session.Id;
+
         await _orderRepository.CreateAsync(OrderHeader);
-        _navigationManager.NavigateTo($"/order/confirmation/{OrderHeader.Id}");
+        _navigationManager.NavigateTo(session.Url);
     }
 
 }
