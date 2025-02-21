@@ -10,6 +10,7 @@ using YumBlazor.Components;
 using YumBlazor.Components.Account;
 using Radzen;
 using YumBlazor.Services;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddRadzenComponents();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddScoped<PaymentService>();
 builder.Services.AddSingleton<SharedStateService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
@@ -53,6 +55,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => {
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("StripeApiKey").Value;
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
